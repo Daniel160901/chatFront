@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-button><ion-icon name="chevron-back-outline" slot="end" ></ion-icon></ion-button>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-img src="../../assets/icon/login.svg"></ion-img>
+  
+  <ion-list>
+
+    <form [formGroup]="formulario" class="login-form">
+
+    <ion-item fill="outline">
+      <ion-label position="floating">Usuario</ion-label>
+      <ion-input formControlName="username" placeholder="Ingresa tu usuario"></ion-input>
+    </ion-item>
+
+    <ion-item fill="outline">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
+    </ion-item>
+
+  </form>
+
+  </ion-list>
+
+  <ion-button shape="round" size="default" color="primary" strong="true" (click)="login(formulario.value)">Ingresar</ion-button>
+
+  <div style="text-align: center;">
+    <p>¿No tienes una cuenta con nosotros?</p>
+    <p style="margin-top: -13px;"><a href="/register">Registrate aquí</a></p>
+  </div>
+</ion-content>

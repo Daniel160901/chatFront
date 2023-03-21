@@ -1,0 +1,39 @@
+<ion-header collapse="condense">
+    <ion-toolbar>
+        <ion-title size="large">Mi perfil</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <div *ngIf="queri">
+        <ion-img src="../../assets/icon/user.svg"></ion-img>
+    <ion-button (click)="presentActionSheet()" fill="clear"><ion-icon name="build-outline"></ion-icon></ion-button>
+
+    <h5>Nombre</h5>
+    <ion-item button (click)="changeName()" lines="none">
+        <ion-label>
+            {{queri.fullname}}
+        </ion-label>
+    </ion-item>
+    <h5>Usuario</h5>
+    <ion-item button (click)="changeUsername()" lines="none">
+        <ion-label>
+            {{queri.username}}
+        </ion-label>
+    </ion-item>
+    <h5>Contraseña</h5>
+    <ion-item button (click)="changePassword()" lines="none">
+        <ion-label strong>
+            *********
+        </ion-label>
+    </ion-item>
+    <h5>Correo electrónico</h5>
+    <ion-item lines="none">
+        <ion-label>
+            {{queri.email}}
+        </ion-label>
+    </ion-item>
+    </div>
+
+</ion-content>
+
+<ion-button id="logout" href="/login" color="danger" (click)="logout()">Cerrar sesión</ion-button>

@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nuevo usuario
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <h1>Nuevo usuario</h1>
+  
+  <ion-img src="../../assets/icon/newuser.svg"></ion-img>
+  
+  <ion-list>
+
+    <form [formGroup]="registroForm" class="login-form">
+      
+    <ion-item fill="outline">
+      <ion-label position="floating">Nombre completo</ion-label>
+      <ion-input formControlName="fullname" placeholder="Ingresa tu nombre completo"></ion-input>
+    </ion-item>
+
+    <ion-item fill="outline">
+      <ion-label position="floating">Nombre de usuario</ion-label>
+      <ion-input formControlName="username" placeholder="Ingresa tu usuario"></ion-input>
+    </ion-item>
+
+    <ion-item fill="outline">
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input formControlName="email" placeholder="Ingresa tu correo"></ion-input>
+    </ion-item>
+
+    <ion-item fill="outline">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
+    </ion-item>
+    </form>
+  
+  </ion-list>
+
+  <ion-button type="submit" shape="round" size="default" color="success" strong="true" href="/login" (click)="createUser(registroForm.value)" >Registrarse</ion-button>
+</ion-content>

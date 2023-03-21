@@ -1,0 +1,29 @@
+ion-header {
+  margin-bottom: -1px;
+}
+
+ion-img {
+  width: 50%;
+  height: 50%;
+  display: block;
+  margin: auto;
+}
+
+ion-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+#logout {
+  width: 50%;
+  display: inline-block;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
