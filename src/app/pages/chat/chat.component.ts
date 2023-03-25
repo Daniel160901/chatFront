@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
-  emisor: any = localStorage.getItem('ID')?.toString();
+  emisor: any = localStorage.getItem('ID');
   receptor: any = localStorage.getItem('otroUser');
   currentUserName: any = localStorage.getItem('name');
   otroUsername: any = localStorage.getItem('otroUserName');

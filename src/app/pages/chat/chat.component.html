@@ -1,57 +1,61 @@
 <ion-header>
   <ion-toolbar>
-      <ion-avatar slot="start">
-        <img alt="Silhouette of a person's head"
-          src="https://static.nuso.org/media/cache/4a/06/4a069bed52821805b4cde486531d950e.jpg"/>
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ otroUsername }}</h2>
-        <a href="/tabs/tab1"><ion-button size="small" (click)="regresar()" ><ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon></ion-button></a>
-      </ion-label>
+    <ion-avatar slot="start">
+      <img alt="Silhouette of a person's head"
+        src="https://static.nuso.org/media/cache/4a/06/4a069bed52821805b4cde486531d950e.jpg" />
+    </ion-avatar>
+    <ion-label>
+      <h2>{{ otroUsername }}</h2>
+      <a href="/tabs/tab1"><ion-button size="small" (click)="regresar()"><ion-icon slot="icon-only"
+            name="return-up-back-outline"></ion-icon></ion-button></a>
+    </ion-label>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
     <ion-row *ngFor="let conversation of conversations">
-    
-      <ion-col size="9" *ngIf="emisor !== conversation.emisor; else #emisorChat" class="mensaje otro-mensaje">
-        <b>{{ otroUsername }}</b> <br>
-        <span>{{ conversation.mensaje }}</span>
-        <div class="time" text-right>
-          <br>{{ conversation.hora | date: 'short'  }}
+
+      <ion-col *ngIf="(emisor == conversation.emisor || emisor == conversation.receptor) &&
+      (receptor == conversation.emisor || receptor == conversation.receptor)">
+
+        <div size="9" *ngIf="receptor == conversation.emisor" class="mensaje otro-mensaje">
+          <b>{{ otroUsername }}</b> <br>
+          <span>{{ conversation.mensaje }}</span>
+          <div class="time" text-right>
+            <br>{{ conversation.hora | date: 'short' }}
+          </div>
         </div>
+
+        <div offset="3" size="9" *ngIf="emisor == conversation.emisor" class="mensaje mi-mensaje">
+          <b>{{ currentUserName }}</b> <br>
+          <span>{{ conversation.mensaje }}</span>
+          <div class="time" text-right>
+            <br>{{ conversation.hora | date: 'short' }}
+          </div>
+        </div>
+
       </ion-col>
-      
-      <ng-template #emisorChat>
-        <ion-col offset="3" size="9" *ngIf="emisor === conversation.emisor" class="mensaje mi-mensaje">
-            <b>{{ currentUserName }}</b> <br>
-            <span>{{ conversation.mensaje }}</span>
-            <div class="time" text-right>
-                  <br>{{ conversation.hora | date: 'short'  }}
-                </div>
-              </ion-col>
-      </ng-template>
-      
-      
-  
+
+
+
     </ion-row>
 
   </ion-grid>
 </ion-content>
 
-  <ion-footer>
-    <ion-toolbar color="light">
-      <ion-row>
-        <ion-col size="10">
-          <textarea autosize [(ngModel)]="newMsg" class="nuevoMensaje"></textarea>
-        </ion-col>
-        <ion-col size="2">
-          <ion-button expand="block" fill="clear" color="success" [disabled]="newMsg === ''" class="msg-btn"
-            (click)="enviarMensajeBD(emisor, receptor, newMsg); enviarMensaje()">
-            <ion-icon name="caret-forward-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-  </ion-footer>
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row>
+      <ion-col size="10">
+        <textarea autosize [(ngModel)]="newMsg" class="nuevoMensaje"></textarea>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button expand="block" fill="clear" color="success" [disabled]="newMsg === ''" class="msg-btn"
+          (click)="enviarMensajeBD(emisor, receptor, newMsg); enviarMensaje()">
+          <ion-icon name="caret-forward-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
