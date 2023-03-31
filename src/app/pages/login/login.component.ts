@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { QueriesService } from 'src/app/services/queries.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -21,15 +22,16 @@ export class LoginComponent implements OnInit {
   public estatus: Number = 1;
 
 
-  constructor(private router: Router, private usser: LoginService, private httpClient: HttpClient, private Queries: QueriesService) { }
+  constructor(private router: Router, private usser: LoginService, private httpClient: HttpClient, private Queries: QueriesService, private Socket: SocketService) { }
 
-  async ngOnInit() {  }
+  async ngOnInit() {}
 
   async login(form: any) {
     await this.usser.login(form).then((data: any) => {
       if (data.ok) {
-        console.log('All is good');
         this.getID(form);
+        
+        this.Socket.socketOnlineEmit();
         setTimeout("location.href='/tabs/tab1'", 500);
       } else {
         alert('Los datos no son correctos');
@@ -73,7 +75,6 @@ export class LoginComponent implements OnInit {
       }
       const res = this.Queries.status(data).then((query: any) => {
         if (query.ok) {
-          console.log('El usuario está en linea');
           this.estado = query.data;
         } else {
           console.log('Problema al poner en linea');

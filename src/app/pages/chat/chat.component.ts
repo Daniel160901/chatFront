@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QueriesService } from 'src/app/services/queries.service';
 import { HttpClient } from '@angular/common/http';
+import { io } from "socket.io-client";
 
 @Component({
   selector: 'app-chat',
@@ -12,22 +13,30 @@ export class ChatComponent implements OnInit {
   receptor: any = localStorage.getItem('otroUser');
   currentUserName: any = localStorage.getItem('name');
   otroUsername: any = localStorage.getItem('otroUserName');
+  
+
 
   newMsg = '';
   conversations: any;
   stado: any;
-
-  mio: Number= 1;
-  suyo: any= 0;
   
   public menzage: any;
   public contact: any;
 
+  
+  socket = io('http://localhost:3000/');
 
-  constructor(private Queries: QueriesService, private httpClient: HttpClient) { }
+
+  constructor(private Queries: QueriesService, private httpClient: HttpClient) {
+    
+  }
 
   ngOnInit() {
     this.getMessages();
+    this.socket.on('enviarmensaje', (data) => {
+      console.log('Mensaje recibido: ', data.mensaje);
+      this.conversations.push(data);
+    });
   }
 
   messages = [
@@ -57,18 +66,12 @@ export class ChatComponent implements OnInit {
   //@ViewChild (IonContent) content: IonContent;
 
 
-  enviarMensaje() {
-    this.messages.push({
-      user: this.currentUserName,
-      createdAt: new Date().getTime(),
-      msg: this.newMsg
-    });
+  
 
-    this.newMsg = '';
+    
     // setTimeout(() => {
     // this.content.scrollToBottom(200);
     // });
-  }
 
   getMessages() {
     try {
@@ -77,19 +80,6 @@ export class ChatComponent implements OnInit {
         if (query.ok) {
           console.log(query.data);
           this.conversations = query.data;
-          console.log('El current user tiene de ID el: ' + this.emisor);
-          console.log(this.receptor);
-          
-          for (let i = 0; i < this.conversations.length; i++) {
-            const element = this.conversations[i];
-            if(this.emisor == element.emisor && this.receptor == element.receptor){
-              console.log(element.emisor + ' ' + element.receptor);
-            } else if(this.emisor == element.receptor && this.receptor == element.emisor){
-              console.log(element.emisor + ' ' + element.receptor);
-              } 
-            
-          }
-          
         } else {
           console.log('Hubo un problema obteniendo los usuarios');
         }
@@ -116,7 +106,9 @@ export class ChatComponent implements OnInit {
         if (query.ok) {
           this.menzage = query.data;
           console.log(query.data);
-          
+          this.socket.emit('message', this.menzage);
+          this.conversations.push(this.menzage);
+          this.newMsg = '';
         } else {
           console.log('Problema al enviar mesnnsjae');
         }
@@ -125,5 +117,7 @@ export class ChatComponent implements OnInit {
       console.log(error);
     }
   }
+
+  
 
 }
